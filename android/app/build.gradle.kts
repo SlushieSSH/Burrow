@@ -29,6 +29,7 @@ android {
             storePassword = signingProperties.getProperty("storePassword")
             keyAlias = signingProperties.getProperty("keyAlias")
             keyPassword = signingProperties.getProperty("keyPassword")
+            enableV3Signing = true
         }
     }
 
