@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Burrow</string>
+    <string name="pair_title">Pair with your PC</string>
+    <string name="pair_address_label">PC address</string>
+    <string name="pair_code_label">Pairing code</string>
+    <string name="pair_button">Pair</string>
+    <string name="pair_button_busy">Pairing</string>
+    <string name="pair_error_rejected">That code didn’t work</string>
+    <string name="pair_error_unreachable">Can’t reach your PC</string>
+
+    <string name="tab_characters">Characters</string>
+    <string name="tab_create">Create</string>
+    <string name="tab_chats">Chats</string>
+    <string name="characters_empty">No characters yet</string>
+    <string name="create_title">Create a character</string>
+    <string name="continue_button">Continue</string>
+    <string name="next">Next</string>
+    <string name="create_button">Create</string>
+    <string name="step_name">Name and picture</string>
+    <string name="step_greeting">First message</string>
+    <string name="step_personality">Personality</string>
+    <string name="field_name">Name</string>
+    <string name="choose_picture">Choose picture</string>
+    <string name="step_scenario">Scenario and extras</string>
+    <string name="field_scenario">Scenario</string>
+    <string name="field_examples">Example dialogue</string>
+    <string name="field_system_prompt">System prompt</string>
+    <string name="step_style">Style</string>
+    <string name="field_reply_length">Reply length</string>
+    <string name="length_short">Short</string>
+    <string name="length_medium">Medium</string>
+    <string name="length_long">Long</string>
+    <string name="field_creativity">Creativity</string>
+    <string name="creativity_low">Steady</string>
+    <string name="creativity_high">Wild</string>
+    <string name="tab_profile">Profile</string>
+    <string name="field_your_name">Your name</string>
+    <string name="field_about_you">About you</string>
+    <string name="unpair">Unpair this phone</string>
+    <string name="unpair_title">Unpair this phone?</string>
+    <string name="delete_character_title">Delete %1$s?</string>
+    <string name="delete_character_body">Their chats are deleted too</string>
+    <string name="status_ready">Ready</string>
+    <string name="status_loading">Loading %1$s</string>
+    <string name="status_unloading">Unloading</string>
+    <string name="status_no_model">No model loaded</string>
+    <string name="status_offline">PC offline</string>
+    <string name="chats_empty">No chats yet</string>
+    <string name="delete_chat">Delete chat</string>
+    <string name="time_now">now</string>
+    <string name="time_minutes">%1$dm</string>
+    <string name="time_hours">%1$dh</string>
+    <string name="time_days">%1$dd</string>
+
+    <string name="back">Back</string>
+    <string name="chat_menu">Chat options</string>
+    <string name="new_chat">New chat</string>
+    <string name="message_hint">Message %1$s</string>
+    <string name="send">Send</string>
+    <string name="stop">Stop</string>
+    <string name="copy">Copy</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit_message">Edit message</string>
+    <string name="previous_reply">Previous reply</string>
+    <string name="next_reply">Next reply</string>
+    <string name="regenerate">New reply</string>
+    <string name="version_count">%1$d/%2$d</string>
+
+    <string name="chat_error_unpaired">This phone isn’t paired any more</string>
+    <string name="chat_error_no_model">No model loaded on your PC</string>
+    <string name="chat_error_lm_studio">LM Studio didn’t answer</string>
+    <string name="chat_error_unreachable">Can’t reach your PC</string>
+    <string name="chat_error_cut_off">Ran out of room while thinking</string>
+
+    <string name="thinking">Thinking</string>
+    <string name="show_thinking">Show thinking</string>
+    <string name="hide_thinking">Hide thinking</string>
+
+    <string name="models_title">Models</string>
+    <string name="models_empty">No models downloaded in LM Studio</string>
+    <string name="context_window">Context window</string>
+    <string name="context_size">%1$dK</string>
+    <string name="model_load">Load</string>
+    <string name="model_loading">Loading</string>
+    <string name="model_unload">Unload model</string>
+    <string name="model_error_busy">Your PC is still switching models</string>
+    <string name="model_error_lm_studio">Open LM Studio on your PC</string>
+    <string name="model_error_port">Port 1234 is taken by another app</string>
+    <string name="model_error_open_to_network">Turn off Serve on local network in LM Studio</string>
+    <string name="model_error_failed">Can’t reach your PC</string>
+</resources>
