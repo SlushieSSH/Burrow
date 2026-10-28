@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             MaterialTheme(colorScheme = burrowColors) {
-                AppScreen()
+                StorageGate { AppScreen() }
             }
         }
     }

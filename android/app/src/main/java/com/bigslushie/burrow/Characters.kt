@@ -2,18 +2,14 @@ package com.bigslushie.burrow
 
 import android.content.Context
 import androidx.datastore.core.CorruptionException
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
 import com.google.crypto.tink.Aead
 import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -93,16 +89,14 @@ private object CharacterListSerializer : Serializer<List<Character>> {
     }
 }
 
-class CharacterRepository(private val context: Context, private val aead: () -> Aead) {
-    private val store: DataStore<List<Character>> by lazy {
-        encryptedStore(context, aead(), charactersFileName, CharacterListSerializer)
-    }
+class CharacterRepository(context: Context, aead: () -> Aead, health: StorageHealth) {
+    val storage = EncryptedStore(context, aead, charactersFileName, CharacterListSerializer, StoredData.Characters, health)
 
-    val characters: Flow<List<Character>> = flow { emitAll(store.data) }
+    val characters: Flow<List<Character>> = storage.data
         .map { characters -> characters.sortedByDescending { it.createdAtMillis } }
         .flowOn(Dispatchers.IO)
 
     suspend fun update(transform: (List<Character>) -> List<Character>) {
-        withContext(Dispatchers.IO) { store.updateData(transform) }
+        storage.update(transform)
     }
 }

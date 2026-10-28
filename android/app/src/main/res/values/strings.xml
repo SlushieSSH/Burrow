@@ -92,4 +92,24 @@
     <string name="model_error_port">Port 1234 is taken by another app</string>
     <string name="model_error_open_to_network">Turn off Serve on local network in LM Studio</string>
     <string name="model_error_failed">Can’t reach your PC</string>
+    <string name="storage_problem_title">Some of your data can’t be unlocked</string>
+    <string name="storage_problem_body">Nothing has been deleted, so trying again is safe</string>
+    <string name="storage_try_again">Try again</string>
+    <string name="storage_reset">Reset</string>
+    <string name="stored_chats">Chats</string>
+    <string name="stored_characters">Characters</string>
+    <string name="stored_profile">Your profile</string>
+    <string name="stored_pairing">Pairing</string>
+    <string name="reset_chats_question">Delete all chats for good?</string>
+    <string name="reset_characters_question">Delete all characters for good?</string>
+    <string name="reset_profile_question">Delete your profile for good?</string>
+    <string name="reset_pairing_question">Forget the pairing?</string>
+    <string name="reset_gone_for_good">Burrow can’t get it back after this</string>
+    <string name="reset_pairing_detail">You’ll pair with your PC again, everything else stays</string>
+    <string name="keys_problem_title">Burrow can’t unlock its storage</string>
+    <string name="keys_unreadable_body">Your phone’s secure key storage didn’t open Burrow’s key, nothing has been deleted</string>
+    <string name="keystore_unavailable_body">This phone’s secure key storage isn’t working, and Burrow won’t store anything without it</string>
+    <string name="keys_reset">Reset Burrow</string>
+    <string name="keys_reset_question">Delete everything in Burrow?</string>
+    <string name="keys_reset_detail">This deletes your chats, characters, profile, pictures and pairing for good</string>
 </resources>

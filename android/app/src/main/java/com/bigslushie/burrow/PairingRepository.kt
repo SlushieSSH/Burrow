@@ -2,12 +2,9 @@ package com.bigslushie.burrow
 
 import android.content.Context
 import androidx.datastore.core.CorruptionException
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
 import com.google.crypto.tink.Aead
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withContext
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.EOFException
@@ -57,15 +54,13 @@ private object PairingRecordSerializer : Serializer<PairingRecord> {
     }
 }
 
-class PairingRepository(private val context: Context, private val aead: () -> Aead) {
-    private val store: DataStore<PairingRecord> by lazy {
-        encryptedStore(context, aead(), pairingFileName, PairingRecordSerializer)
-    }
+class PairingRepository(context: Context, aead: () -> Aead, health: StorageHealth) {
+    val storage = EncryptedStore(context, aead, pairingFileName, PairingRecordSerializer, StoredData.Pairing, health)
 
-    suspend fun current(): PairingRecord = withContext(Dispatchers.IO) { store.data.first() }
+    suspend fun current(): PairingRecord = storage.data.first()
 
     suspend fun save(record: PairingRecord) {
-        withContext(Dispatchers.IO) { store.updateData { record } }
+        storage.update { record }
     }
 
     suspend fun clear() = save(PairingRecord.unpaired)

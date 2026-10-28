@@ -46,10 +46,11 @@ private const val hostPort = 47123
 class SecurityTest {
     private val hostAddress = requireNotNull(InstrumentationRegistry.getArguments().getString("hostAddress")) { "Pass -Pandroid.testInstrumentationRunnerArguments.hostAddress=<PC Tailscale address>" }
     private val application = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as BurrowApplication
-    private val aead: Aead by lazy { createAead(application) }
+    private val aead: Aead by lazy { (openKeys(application) as KeyState.Ready).aead }
 
     @Test
     fun storedDataNeverContainsPlaintext() = runTest(timeout = 2.minutes) {
+        application.openStorage()
         val character = Character("$canary-id", "$canary name", "$canary greeting", "$canary personality", System.currentTimeMillis())
         val message = ChatMessage("$canary-message", Speaker.User, listOf("$canary message"))
         val chat = Chat("$canary-chat", character.id, listOf(message), System.currentTimeMillis())
@@ -78,6 +79,7 @@ class SecurityTest {
 
     @Test
     fun tamperedOrSwappedCiphertextIsRejected() = runTest(timeout = 2.minutes) {
+        application.openStorage()
         val ciphertext = aead.encrypt("$canary chat".encodeToByteArray(), "chats.pb".encodeToByteArray())
         assertArrayEquals("$canary chat".encodeToByteArray(), aead.decrypt(ciphertext, "chats.pb".encodeToByteArray()))
 
@@ -107,6 +109,7 @@ class SecurityTest {
 
     @Test
     fun impostorCertificateIsRefused() = runTest(timeout = 2.minutes) {
+        presentedHostCertificate()
         val impostor = HeldCertificate.Builder().addSubjectAlternativeName(hostAddress).build()
         val status = HostClient().status(PairingRecord(hostAddress, impostor.certificate.encoded, "$canary-token"))
         assertEquals(HostStatus.Offline, status)

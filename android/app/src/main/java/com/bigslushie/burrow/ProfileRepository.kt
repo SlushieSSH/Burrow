@@ -2,15 +2,9 @@ package com.bigslushie.burrow
 
 import android.content.Context
 import androidx.datastore.core.CorruptionException
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
 import com.google.crypto.tink.Aead
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.InputStream
@@ -42,14 +36,12 @@ private object ProfileSerializer : Serializer<Profile> {
     }
 }
 
-class ProfileRepository(private val context: Context, private val aead: () -> Aead) {
-    private val store: DataStore<Profile> by lazy {
-        encryptedStore(context, aead(), profileFileName, ProfileSerializer)
-    }
+class ProfileRepository(context: Context, aead: () -> Aead, health: StorageHealth) {
+    val storage = EncryptedStore(context, aead, profileFileName, ProfileSerializer, StoredData.Profile, health)
 
-    val profile: Flow<Profile> = flow { emitAll(store.data) }.flowOn(Dispatchers.IO)
+    val profile: Flow<Profile> = storage.data
 
     suspend fun save(profile: Profile) {
-        withContext(Dispatchers.IO) { store.updateData { profile } }
+        storage.update { profile }
     }
 }

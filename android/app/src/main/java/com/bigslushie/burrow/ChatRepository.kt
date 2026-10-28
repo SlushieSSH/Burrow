@@ -2,16 +2,12 @@ package com.bigslushie.burrow
 
 import android.content.Context
 import androidx.datastore.core.CorruptionException
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
 import com.google.crypto.tink.Aead
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -105,16 +101,14 @@ private object ChatArchiveSerializer : Serializer<ChatArchive> {
     }
 }
 
-class ChatRepository(private val context: Context, private val aead: () -> Aead) {
-    private val store: DataStore<ChatArchive> by lazy {
-        encryptedStore(context, aead(), chatsFileName, ChatArchiveSerializer)
-    }
+class ChatRepository(context: Context, aead: () -> Aead, health: StorageHealth) {
+    val storage = EncryptedStore(context, aead, chatsFileName, ChatArchiveSerializer, StoredData.Chats, health)
 
-    val chats: Flow<List<Chat>> = flow { emitAll(store.data) }
+    val chats: Flow<List<Chat>> = storage.data
         .map { archive -> archive.chats }
         .flowOn(Dispatchers.IO)
 
     suspend fun update(transform: (List<Chat>) -> List<Chat>) {
-        withContext(Dispatchers.IO) { store.updateData { archive -> ChatArchive(transform(archive.chats)) } }
+        storage.update { archive -> ChatArchive(transform(archive.chats)) }
     }
 }
